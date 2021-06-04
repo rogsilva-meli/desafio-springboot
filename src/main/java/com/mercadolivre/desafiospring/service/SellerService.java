@@ -1,6 +1,7 @@
 package com.mercadolivre.desafiospring.service;
 
 import com.mercadolivre.desafiospring.entity.Seller;
+import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,9 @@ public class SellerService {
         return  seller;
     }
 
-    public Seller getSellerFollowedByUser(Integer userId) {
-        Seller seller = sellerRepository.findById(userId).get();
+    public Seller getSellerById(Integer id){
+        Seller seller = sellerRepository.findById(id)
+                .orElseThrow(() -> new IndexOutOfBoundsException("Seller "+id +" not found"));
         return seller;
     }
 }

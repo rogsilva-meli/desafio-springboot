@@ -1,7 +1,9 @@
 package com.mercadolivre.desafiospring.controller;
 
 import com.mercadolivre.desafiospring.controller.dto.SellerDTO;
+import com.mercadolivre.desafiospring.controller.dto.SellerDTOUS003;
 import com.mercadolivre.desafiospring.controller.dto.UserDTO;
+import com.mercadolivre.desafiospring.controller.dto.UserDTOUS004;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.service.SellerService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.xml.TransformerUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -66,15 +69,30 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}/followers/list")
-    public ResponseEntity<UserDTO> getUserThatFollowASeller(@PathVariable Integer userId){
-        User u = userService.getListUserBySeller(userId);
-        UserDTO userDTO = UserDTO.builder()
+    public ResponseEntity<SellerDTOUS003> getSellerById(@PathVariable Integer userId){
+        Seller s = sellerService.getSellerById(userId);
+        SellerDTOUS003 sellerDTOUS003 = SellerDTOUS003.builder()
+                .userId(s.getId())
+                .userName(s.getSellerName())
+                .followers(s.getUsers())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(sellerDTOUS003);
+    }
+
+    @GetMapping("/users/{userId}/followed/list")
+    public ResponseEntity<UserDTOUS004> getUserById(@PathVariable Integer userId){
+        User u = userService.getUserById(userId);
+        UserDTOUS004 userDTOUS004 = UserDTOUS004.builder()
                 .userId(u.getId())
                 .userName(u.getUserName())
-                .followers(u.getSellers())
+                .followed(u.getSellers())
                 .build();
-        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDTOUS004);
     }
+
+
 
 
 
