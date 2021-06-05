@@ -6,19 +6,27 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
 @Setter
 public class User extends BaseEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
     private String userName;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "users")
     private Set<Seller> sellers = new HashSet<>();
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts = new HashSet<>();
+
+
+
+
+
 
 }

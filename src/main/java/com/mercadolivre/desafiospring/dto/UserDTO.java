@@ -1,4 +1,4 @@
-package com.mercadolivre.desafiospring.controller.dto;
+package com.mercadolivre.desafiospring.dto;
 
 import com.mercadolivre.desafiospring.entity.Seller;
 import lombok.AllArgsConstructor;
@@ -8,17 +8,17 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTOUS004 {
+public class UserDTO {
 
     private int userId;
     private String userName;
-    private Set<Seller> followed = new HashSet<>();
+    private Set<Seller> followers = new HashSet<>();
 
 
 }

@@ -1,26 +1,19 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.controller.dto.SellerDTO;
-import com.mercadolivre.desafiospring.controller.dto.SellerDTOUS003;
-import com.mercadolivre.desafiospring.controller.dto.UserDTO;
-import com.mercadolivre.desafiospring.controller.dto.UserDTOUS004;
+import com.mercadolivre.desafiospring.dto.SellerDTO;
+import com.mercadolivre.desafiospring.dto.SellerDTOUS003;
+import com.mercadolivre.desafiospring.dto.UserDTOUS004;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.service.SellerService;
 import com.mercadolivre.desafiospring.service.UserService;
-import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.util.xml.TransformerUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")

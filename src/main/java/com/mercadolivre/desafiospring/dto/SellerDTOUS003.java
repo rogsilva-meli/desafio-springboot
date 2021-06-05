@@ -1,6 +1,5 @@
-package com.mercadolivre.desafiospring.controller.dto;
+package com.mercadolivre.desafiospring.dto;
 
-import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
