@@ -25,4 +25,8 @@ public class Seller extends BaseEntity{
     public Set<User> users = new HashSet<>();
 
     private int followers_count;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "seller")
+    private Set<Post> posts = new HashSet<>();
 }

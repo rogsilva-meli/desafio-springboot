@@ -19,14 +19,4 @@ public class User extends BaseEntity{
     @ManyToMany(mappedBy = "users")
     private Set<Seller> sellers = new HashSet<>();
 
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<Post> posts = new HashSet<>();
-
-
-
-
-
-
 }
