@@ -1,8 +1,8 @@
 package com.mercadolivre.desafiospring.controller;
 
 import com.mercadolivre.desafiospring.dto.SellerDTO;
-import com.mercadolivre.desafiospring.dto.SellerDTOUS003;
-import com.mercadolivre.desafiospring.dto.UserDTOUS004;
+import com.mercadolivre.desafiospring.dto.SellerDTOUS0003;
+import com.mercadolivre.desafiospring.dto.UserDTOUS0004;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.service.SellerService;
@@ -41,6 +41,7 @@ public class UserController {
 
     }
 
+    // Exercício US 0001
     @PostMapping("/users/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<Seller> addSellerToUser(
             @PathVariable Integer userId,
@@ -50,6 +51,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(s);
     }
 
+    // Exercício US 0002
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<SellerDTO> getCountSellerByUser(@PathVariable Integer userId){
         Seller s = sellerService.countUsers(userId);
@@ -61,32 +63,29 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(sellerDTO);
     }
 
+    // Exercício US 0003
     @GetMapping("/users/{userId}/followers/list")
-    public ResponseEntity<SellerDTOUS003> getSellerById(@PathVariable Integer userId){
+    public ResponseEntity<SellerDTOUS0003> getSellerById(@PathVariable Integer userId){
         Seller s = sellerService.getSellerById(userId);
-        SellerDTOUS003 sellerDTOUS003 = SellerDTOUS003.builder()
+        SellerDTOUS0003 sellerDTOUS0003 = SellerDTOUS0003.builder()
                 .userId(s.getId())
                 .userName(s.getSellerName())
                 .followers(s.getUsers())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(sellerDTOUS003);
+        return ResponseEntity.status(HttpStatus.OK).body(sellerDTOUS0003);
     }
 
+    // Exercício US 0004
     @GetMapping("/users/{userId}/followed/list")
-    public ResponseEntity<UserDTOUS004> getUserById(@PathVariable Integer userId){
+    public ResponseEntity<UserDTOUS0004> getUserById(@PathVariable Integer userId){
         User u = userService.getUserById(userId);
-        UserDTOUS004 userDTOUS004 = UserDTOUS004.builder()
+        UserDTOUS0004 userDTOUS0004 = UserDTOUS0004.builder()
                 .userId(u.getId())
                 .userName(u.getUserName())
                 .followed(u.getSellers())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(userDTOUS004);
+        return ResponseEntity.status(HttpStatus.OK).body(userDTOUS0004);
     }
-
-
-
-
-
 }
