@@ -39,12 +39,21 @@ public class UserService {
         return user;
     }
 
-    public Seller addSellerToUser(Integer userId, Integer userIdToFollow){
+    public Seller followUser(Integer userId, Integer userIdToFollow){
         Seller seller = sellerRepository.findById(userIdToFollow).get();
         User user = userRepository.findById(userId).get();
 
         seller.users.add(user);
         return sellerRepository.save(seller);
+    }
+
+    public void unfollow(Integer userId, Integer userIdToUnfollow){
+        Seller seller = sellerRepository.findById(userIdToUnfollow).get();
+        User user = userRepository.findById(userId).get();
+
+        seller.users.remove(user);
+        sellerRepository.save(seller);
+
     }
 
     public User getListUserBySeller(Integer userId) {

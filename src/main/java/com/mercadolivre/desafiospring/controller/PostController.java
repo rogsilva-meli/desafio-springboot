@@ -2,21 +2,19 @@ package com.mercadolivre.desafiospring.controller;
 
 import com.mercadolivre.desafiospring.dto.PostDTO;
 import com.mercadolivre.desafiospring.dto.PostDTOUS0006;
-import com.mercadolivre.desafiospring.dto.SellerDTO;
 import com.mercadolivre.desafiospring.dto.SellerDTOUS0006;
 import com.mercadolivre.desafiospring.entity.Post;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
 import com.mercadolivre.desafiospring.repository.UserRepository;
 import com.mercadolivre.desafiospring.service.PostService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -25,13 +23,13 @@ public class PostController {
     private PostService postService;
     private UserRepository userRepository;
     private ProductRepository productRepository;
-    private ModelMapper mapper;
 
-    public PostController(PostService postService, UserRepository userRepository, ProductRepository productRepository, ModelMapper mapper) {
+
+    public PostController(PostService postService, UserRepository userRepository, ProductRepository productRepository) {
         this.postService = postService;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
-        this.mapper = mapper;
+
     }
 
     @GetMapping("/products/posts")

@@ -47,7 +47,7 @@ public class UserController {
             @PathVariable Integer userId,
             @PathVariable Integer userIdToFollow
     ) {
-        Seller s = userService.addSellerToUser(userId, userIdToFollow);
+        Seller s = userService.followUser(userId, userIdToFollow);
         return ResponseEntity.status(HttpStatus.CREATED).body(s);
     }
 
@@ -87,5 +87,15 @@ public class UserController {
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(userDTOUS0004);
+    }
+
+    // Exercício US 0007
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void removeSellerToUser(
+            @PathVariable Integer userId,
+            @PathVariable Integer userIdToUnfollow
+    ) {
+        userService.unfollow(userId, userIdToUnfollow);
     }
 }

@@ -6,7 +6,6 @@ import com.mercadolivre.desafiospring.dto.PostDTOUS0006;
 import com.mercadolivre.desafiospring.entity.*;
 import com.mercadolivre.desafiospring.repository.*;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.*;
 
