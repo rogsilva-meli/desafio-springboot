@@ -4,15 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Getter
 @Setter
-public class Seller extends BaseEntity{
+public class Seller implements Comparable<Seller> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private String sellerName;
 
@@ -29,4 +32,10 @@ public class Seller extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "seller")
     private Set<Post> posts = new HashSet<>();
+
+
+    @Override
+    public int compareTo(Seller o) {
+        return this.getSellerName().compareTo(o.sellerName);
+    }
 }

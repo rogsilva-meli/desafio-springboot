@@ -1,5 +1,6 @@
 package com.mercadolivre.desafiospring.service;
 
+import com.mercadolivre.desafiospring.entity.Post;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +41,7 @@ public class UserService {
         return user;
     }
 
-    public Seller followUser(Integer userId, Integer userIdToFollow){
+    public Seller followSeller(Integer userId, Integer userIdToFollow){
         Seller seller = sellerRepository.findById(userIdToFollow).get();
         User user = userRepository.findById(userId).get();
 
@@ -47,17 +49,36 @@ public class UserService {
         return sellerRepository.save(seller);
     }
 
-    public void unfollow(Integer userId, Integer userIdToUnfollow){
+    public void unfollowSeller(Integer userId, Integer userIdToUnfollow){
         Seller seller = sellerRepository.findById(userIdToUnfollow).get();
         User user = userRepository.findById(userId).get();
 
         seller.users.remove(user);
         sellerRepository.save(seller);
+    }
+
+    // Buscar vendedor e classificar em ordem decrescente os seus posts
+    public User getUsersAsc(Integer userId, String order){
+
+        User users = userRepository.findById(userId).get();
+
+        if(order.equals("name_asc")){
+            System.out.println("Escolheu: NAME_ASC");
+            users.setSellers(users.getSellers());
+            return users;
+        }else if (order.equals("name_desc")){
+            System.out.println("Escolheu: NAME_DESC");
+            users.setSellers(users.getSellers());
+            return users;
+        }else{
+            System.out.println("NENHUMA");
+            users.setSellers(users.getSellers());
+            return users;
+        }
 
     }
 
-    public User getListUserBySeller(Integer userId) {
-        User user = userRepository.findById(userId).get();
-        return user;
-    }
+
+
+
 }

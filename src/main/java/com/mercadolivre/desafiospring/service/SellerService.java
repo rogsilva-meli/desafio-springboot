@@ -5,6 +5,7 @@ import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,7 +18,9 @@ public class SellerService {
     }
 
     public List<Seller> getAllSellers() {
-        return sellerRepository.findAll();
+        List<Seller> all = sellerRepository.findAll();
+        Collections.reverse(all);
+        return all;
     }
 
     public Seller createSeller(Seller seller) {

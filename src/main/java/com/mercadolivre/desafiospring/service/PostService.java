@@ -94,7 +94,8 @@ public class PostService {
         return listPostDTOUS0006;
     }
 
-    // Buscar vendedor e classificar em ordem decrescente os seus posts
+    // FALTA ARRUMAR A ORDENAGEM
+    // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
     public Seller getPostById(Integer userId){
 
         LocalDate today = LocalDate.now();
@@ -109,19 +110,7 @@ public class PostService {
             }
         }
 
-        List<Post> list = new ArrayList<>();
-        for (Post p : listSet) {
-                list.add(p);
-        }
-
-        Collections.reverse(list);
-
-        Set<Post> listRev = new HashSet<>();
-        for (Post p : list) {
-            listRev.add(p);
-        }
-
-        s.setPosts(listRev);
+        s.setPosts(listSet);
         return s;
     }
 

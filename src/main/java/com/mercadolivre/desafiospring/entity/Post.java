@@ -13,7 +13,11 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class Post extends BaseEntity implements Comparable<Post>{
+public class Post implements Comparable<Post>{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -30,8 +34,9 @@ public class Post extends BaseEntity implements Comparable<Post>{
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
+
     @Override
     public int compareTo(Post o) {
-        return 0;
+        return this.getDate().compareTo(o.date);
     }
 }

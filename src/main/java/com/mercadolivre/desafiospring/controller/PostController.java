@@ -13,8 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -56,8 +55,16 @@ public class PostController {
 
         Set<PostDTO> postDTOS = postService.convertEntitySellerForListPostDTO(userId);
 
-        Set<PostDTOUS0006> listPostDTOUS0006 = postService.convertListPostDTOForListPostDTOUS0006(postDTOS);
+        List<PostDTO> list = new ArrayList<>();
+        list.addAll(postDTOS);
+        for (PostDTO p : list) {
+            System.out.println("Data: "+p.getDate());
+        }
+        Collections.reverse(list);
+        Set<PostDTO> listRev = new HashSet<>();
+        listRev.addAll(list);
 
+        Set<PostDTOUS0006> listPostDTOUS0006 = postService.convertListPostDTOForListPostDTOUS0006(listRev);
 
         SellerDTOUS0006 res = SellerDTOUS0006.builder().userId(s.getId())
                 .posts(listPostDTOUS0006)

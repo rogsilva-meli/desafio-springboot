@@ -2,6 +2,7 @@ package com.mercadolivre.desafiospring.controller;
 
 import com.mercadolivre.desafiospring.dto.SellerDTO;
 import com.mercadolivre.desafiospring.dto.SellerDTOUS0003;
+import com.mercadolivre.desafiospring.dto.UserDTO;
 import com.mercadolivre.desafiospring.dto.UserDTOUS0004;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -47,7 +48,7 @@ public class UserController {
             @PathVariable Integer userId,
             @PathVariable Integer userIdToFollow
     ) {
-        Seller s = userService.followUser(userId, userIdToFollow);
+        Seller s = userService.followSeller(userId, userIdToFollow);
         return ResponseEntity.status(HttpStatus.CREATED).body(s);
     }
 
@@ -96,6 +97,20 @@ public class UserController {
             @PathVariable Integer userId,
             @PathVariable Integer userIdToUnfollow
     ) {
-        userService.unfollow(userId, userIdToUnfollow);
+        userService.unfollowSeller(userId, userIdToUnfollow);
+    }
+
+    // Exercício US 0008 - FALTA ARRUMAR AS ORDENAGENS
+    @GetMapping("/users/{userId}/followers")
+    public ResponseEntity<UserDTO> lista(@PathVariable Integer userId, @RequestParam String order){
+        User u = userService.getUsersAsc(userId, order);
+
+        UserDTO userDTO = UserDTO.builder()
+                .userId(u.getId())
+                .userName(u.getUserName())
+                .followers(u.getSellers())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 }

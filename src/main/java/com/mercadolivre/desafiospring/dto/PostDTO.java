@@ -2,11 +2,10 @@ package com.mercadolivre.desafiospring.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mercadolivre.desafiospring.entity.*;
+import com.mercadolivre.desafiospring.entity.Product;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 
 @Getter
@@ -14,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDTO {
+public class PostDTO implements Comparable<PostDTO>{
 
     private Integer userId;
 
@@ -29,4 +28,8 @@ public class PostDTO {
 
     private Double price;
 
+    @Override
+    public int compareTo(PostDTO o) {
+        return this.getDate().compareTo(o.date);
+    }
 }
