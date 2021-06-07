@@ -1,11 +1,11 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.dto.SellerDTO;
-import com.mercadolivre.desafiospring.dto.SellerDTOUS0003;
-import com.mercadolivre.desafiospring.dto.UserDTO;
-import com.mercadolivre.desafiospring.dto.UserDTOUS0004;
-import com.mercadolivre.desafiospring.entity.Seller;
-import com.mercadolivre.desafiospring.entity.User;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTO;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTOUS0003;
+import com.mercadolivre.desafiospring.domain.dto.UserDTO;
+import com.mercadolivre.desafiospring.domain.dto.UserDTOUS0004;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
+import com.mercadolivre.desafiospring.domain.entity.User;
 import com.mercadolivre.desafiospring.service.SellerService;
 import com.mercadolivre.desafiospring.service.UserService;
 import org.springframework.http.HttpStatus;

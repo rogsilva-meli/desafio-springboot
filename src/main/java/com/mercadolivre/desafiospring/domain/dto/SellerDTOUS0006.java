@@ -1,13 +1,13 @@
-package com.mercadolivre.desafiospring.dto;
+package com.mercadolivre.desafiospring.domain.dto;
 
-import com.mercadolivre.desafiospring.entity.Post;
-import com.mercadolivre.desafiospring.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,5 +17,5 @@ import java.util.Set;
 public class SellerDTOUS0006 {
 
     private int userId;
-    private Set<PostDTOUS0006> posts = new HashSet<>();
+    private List<PostDTOUS0006> posts = new ArrayList<>();
 }

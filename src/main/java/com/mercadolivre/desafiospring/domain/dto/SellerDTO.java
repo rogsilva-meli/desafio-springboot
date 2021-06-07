@@ -1,4 +1,4 @@
-package com.mercadolivre.desafiospring.dto;
+package com.mercadolivre.desafiospring.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,11 +1,10 @@
-package com.mercadolivre.desafiospring.entity;
+package com.mercadolivre.desafiospring.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class Post extends BaseEntity implements Comparable<Post>{
+public class Post extends BaseEntity{
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -34,9 +33,4 @@ public class Post extends BaseEntity implements Comparable<Post>{
 
     private double discount;
 
-
-    @Override
-    public int compareTo(Post o) {
-        return this.getDate().compareTo(o.date);
-    }
 }

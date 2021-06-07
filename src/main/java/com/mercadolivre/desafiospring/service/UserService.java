@@ -1,19 +1,14 @@
 package com.mercadolivre.desafiospring.service;
 
-import com.mercadolivre.desafiospring.dto.UserDTO;
-import com.mercadolivre.desafiospring.dto.UserDTOUS0004;
-import com.mercadolivre.desafiospring.entity.Post;
-import com.mercadolivre.desafiospring.entity.Seller;
-import com.mercadolivre.desafiospring.entity.User;
+import com.mercadolivre.desafiospring.domain.dto.UserDTO;
+import com.mercadolivre.desafiospring.domain.dto.UserDTOUS0004;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
+import com.mercadolivre.desafiospring.domain.entity.User;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
 import com.mercadolivre.desafiospring.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {

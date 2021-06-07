@@ -1,8 +1,8 @@
-package com.mercadolivre.desafiospring.dto;
+package com.mercadolivre.desafiospring.domain.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mercadolivre.desafiospring.entity.Product;
+import com.mercadolivre.desafiospring.domain.entity.Product;
 import lombok.*;
 
 import java.time.LocalDate;

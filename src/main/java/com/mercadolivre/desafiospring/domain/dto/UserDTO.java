@@ -1,23 +1,26 @@
-package com.mercadolivre.desafiospring.dto;
+package com.mercadolivre.desafiospring.domain.dto;
 
-import com.mercadolivre.desafiospring.entity.Seller;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTOUS0004 {
+public class UserDTO {
 
     private int userId;
     private String userName;
-    private Set<Seller> followed = new HashSet<>();
+    private List<Seller> followers = new ArrayList<>();
 
 
 }

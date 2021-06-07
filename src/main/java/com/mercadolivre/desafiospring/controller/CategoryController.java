@@ -1,6 +1,6 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.entity.Category;
+import com.mercadolivre.desafiospring.domain.entity.Category;
 import com.mercadolivre.desafiospring.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

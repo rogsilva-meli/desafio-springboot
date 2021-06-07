@@ -1,11 +1,11 @@
 package com.mercadolivre.desafiospring.service;
 
 
-import com.mercadolivre.desafiospring.dto.PostDTO;
-import com.mercadolivre.desafiospring.dto.PostDTOUS0006;
-import com.mercadolivre.desafiospring.dto.PostPromoDTO;
-import com.mercadolivre.desafiospring.dto.PostPromoDTOUS00010;
-import com.mercadolivre.desafiospring.entity.*;
+import com.mercadolivre.desafiospring.domain.dto.PostDTO;
+import com.mercadolivre.desafiospring.domain.dto.PostDTOUS0006;
+import com.mercadolivre.desafiospring.domain.dto.PostPromoDTO;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTOUS0006;
+import com.mercadolivre.desafiospring.domain.entity.*;
 import com.mercadolivre.desafiospring.repository.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -95,11 +95,11 @@ public class PostService {
     }
 
     // Converter PostDTO em Set de PostDTO
-    public Set<PostDTO> convertEntitySellerForListPostDTO(Integer userId){
+    public List<PostDTO> convertEntitySellerForListPostDTO(Integer userId){
 
         Seller s = getPostById(userId);
 
-        Set<PostDTO> listPostDTO = new HashSet<>();
+        List<PostDTO> listPostDTO = new ArrayList<>();
         for (Post c : s.getPosts()) {
             PostDTO postDTO = entityForPostDTO(c);
             listPostDTO.add(postDTO);
@@ -108,9 +108,9 @@ public class PostService {
     }
 
     // Converter Set de PostDTO em Set de PostDTOUS0006
-    public Set<PostDTOUS0006> convertListPostDTOForListPostDTOUS0006(Set<PostDTO> list){
+    public List<PostDTOUS0006> convertListPostDTOForListPostDTOUS0006(List<PostDTO> list){
 
-        Set<PostDTOUS0006> listPostDTOUS0006 = new HashSet<>();
+        List<PostDTOUS0006> listPostDTOUS0006 = new ArrayList<>();
         for (PostDTO d : list) {
             PostDTOUS0006 postDTOUS0006 = convertPostDTOToPostDTOUS0006(d);
             listPostDTOUS0006.add(postDTOUS0006);
@@ -119,11 +119,11 @@ public class PostService {
     }
 
     // Converter PostDTO em Set de PostDTO
-    public Set<PostPromoDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
+    public List<PostPromoDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
 
         Seller s = getPostById(userId);
 
-        Set<PostPromoDTO> listPostPromoDTO = new HashSet<>();
+        List<PostPromoDTO> listPostPromoDTO = new ArrayList<>();
         for (Post c : s.getPosts()) {
             PostPromoDTO postPromoDTO = entityForPostPromoDTO(c);
             listPostPromoDTO.add(postPromoDTO);
@@ -132,24 +132,52 @@ public class PostService {
     }
 
 
-    // FALTA ARRUMAR A ORDENAÇÃO
     // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
     public Seller getPostById(Integer userId){
 
+        Seller s = sellerRepository.findById(userId).get();
+
+        return s;
+    }
+
+    // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
+    public Seller getPostByIdLastTwoWeeks(Integer userId){
+
         LocalDate today = LocalDate.now();
-        LocalDate twoWeeks = today.minusDays(14);
+        LocalDate twoWeeks = today.minusWeeks(2);
 
         Seller s = sellerRepository.findById(userId).get();
 
-        Set<Post> listSet = new HashSet<>();
+        List<Post> list = new ArrayList<>();
         for (Post p : s.getPosts()) {
             if(p.getDate().isAfter(twoWeeks)){
-                listSet.add(p);
+                list.add(p);
             }
         }
 
-        s.setPosts(listSet);
+        s.setPosts(list);
         return s;
+    }
+
+    public SellerDTOUS0006 getListPostSellerDTOUS0006(Integer userId){
+
+        Seller s = getPostByIdLastTwoWeeks(userId);
+
+        List<PostDTO> postDTOS = convertEntitySellerForListPostDTO(userId);
+
+        List<PostDTO> list = new ArrayList<>();
+        list.addAll(postDTOS);
+
+        List<PostDTOUS0006> listPostDTOUS0006 = convertListPostDTOForListPostDTOUS0006(list);
+
+        listPostDTOUS0006.sort(Comparator.comparing(PostDTOUS0006::getDate).reversed());
+
+        SellerDTOUS0006 res = SellerDTOUS0006.builder()
+                .userId(s.getId())
+                .posts(listPostDTOUS0006)
+                .build();
+
+        return res;
     }
 
 

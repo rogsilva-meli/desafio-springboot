@@ -1,4 +1,4 @@
-package com.mercadolivre.desafiospring.entity;
+package com.mercadolivre.desafiospring.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -11,7 +11,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-public class Seller extends BaseEntity implements Comparable<Seller> {
+public class Seller extends BaseEntity{
 
     private String sellerName;
 
@@ -21,17 +21,12 @@ public class Seller extends BaseEntity implements Comparable<Seller> {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "seller_id")
     )
-    public Set<User> users = new HashSet<>();
+    public List<User> users = new ArrayList<>();
 
     //private int followers_count;
 
     @JsonIgnore
     @OneToMany(mappedBy = "seller")
-    private Set<Post> posts = new HashSet<>();
+    private List<Post> posts = new ArrayList<>();
 
-
-    @Override
-    public int compareTo(Seller o) {
-        return this.getSellerName().compareTo(o.sellerName);
-    }
 }

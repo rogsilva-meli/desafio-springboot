@@ -1,4 +1,4 @@
-package com.mercadolivre.desafiospring.entity;
+package com.mercadolivre.desafiospring.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -17,6 +17,6 @@ public class User extends BaseEntity{
 
     @JsonIgnore
     @ManyToMany(mappedBy = "users")
-    private Set<Seller> sellers = new HashSet<>();
+    private List<Seller> sellers = new ArrayList<>();
 
 }

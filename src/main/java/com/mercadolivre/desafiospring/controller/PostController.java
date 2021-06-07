@@ -1,8 +1,8 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.dto.*;
-import com.mercadolivre.desafiospring.entity.Post;
-import com.mercadolivre.desafiospring.entity.Seller;
+import com.mercadolivre.desafiospring.domain.dto.*;
+import com.mercadolivre.desafiospring.domain.entity.Post;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
 import com.mercadolivre.desafiospring.repository.UserRepository;
 import com.mercadolivre.desafiospring.service.PostService;
@@ -49,27 +49,9 @@ public class PostController {
     @GetMapping("/products/followed/{userId}/list")
     public ResponseEntity<SellerDTOUS0006> getAllFollowed(@PathVariable Integer userId){
 
-        Seller s = postService.getPostById(userId);
+        SellerDTOUS0006 listPost = postService.getListPostSellerDTOUS0006(userId);
 
-        Set<PostDTO> postDTOS = postService.convertEntitySellerForListPostDTO(userId);
-
-        List<PostDTO> list = new ArrayList<>();
-        list.addAll(postDTOS);
-        for (PostDTO p : list) {
-            System.out.println("Data: "+p.getDate());
-        }
-        Collections.reverse(list);
-        Set<PostDTO> listRev = new HashSet<>();
-        listRev.addAll(list);
-
-        Set<PostDTOUS0006> listPostDTOUS0006 = postService.convertListPostDTOForListPostDTOUS0006(listRev);
-
-        SellerDTOUS0006 res = SellerDTOUS0006.builder()
-                .userId(s.getId())
-                .posts(listPostDTOUS0006)
-                .build();
-
-        return ResponseEntity.status(HttpStatus.OK).body(res);
+        return ResponseEntity.status(HttpStatus.OK).body(listPost);
     }
 
     // Exercício US 00010

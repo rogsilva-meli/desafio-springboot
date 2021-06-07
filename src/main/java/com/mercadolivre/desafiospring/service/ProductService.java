@@ -1,6 +1,6 @@
 package com.mercadolivre.desafiospring.service;
 
-import com.mercadolivre.desafiospring.entity.Product;
+import com.mercadolivre.desafiospring.domain.entity.Product;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 

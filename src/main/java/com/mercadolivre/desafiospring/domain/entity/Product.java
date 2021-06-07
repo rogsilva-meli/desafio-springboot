@@ -1,4 +1,4 @@
-package com.mercadolivre.desafiospring.entity;
+package com.mercadolivre.desafiospring.domain.entity;
 
 import lombok.*;
 

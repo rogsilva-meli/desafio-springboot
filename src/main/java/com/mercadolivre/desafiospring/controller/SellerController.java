@@ -1,14 +1,12 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.entity.Seller;
-import com.mercadolivre.desafiospring.entity.User;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
 import com.mercadolivre.desafiospring.service.SellerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @Controller
