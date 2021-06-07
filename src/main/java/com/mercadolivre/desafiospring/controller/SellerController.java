@@ -30,9 +30,7 @@ public class SellerController {
 
     @PostMapping("/sellers")
     public ResponseEntity<Seller> createSeller(@RequestBody Seller seller){
-
         Seller s = sellerService.createSeller(seller);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(s);
 
     }

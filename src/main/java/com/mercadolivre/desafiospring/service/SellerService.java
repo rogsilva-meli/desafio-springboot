@@ -1,5 +1,6 @@
 package com.mercadolivre.desafiospring.service;
 
+import com.mercadolivre.desafiospring.dto.*;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
@@ -27,11 +28,16 @@ public class SellerService {
         return sellerRepository.save(seller);
     }
 
-    public Seller countUsers(Integer id){
+    public SellerDTO countUsers(Integer id){
         Seller seller = sellerRepository.findById(id).get();
         int i=(int)seller.getUsers().stream().count();
-        seller.setFollowers_count(i);
-        return  seller;
+
+        SellerDTO sellerDTO = SellerDTO.builder()
+                .userId(seller.getId())
+                .userName(seller.getSellerName())
+                .followers_count(i)
+                .build();
+        return  sellerDTO;
     }
 
     public Seller getSellerById(Integer id){
@@ -39,4 +45,15 @@ public class SellerService {
                 .orElseThrow(() -> new IndexOutOfBoundsException("Seller "+id +" not found"));
         return seller;
     }
+
+    public SellerDTOUS0003 convertSellerToSellerDTOUS0003 (Seller s){
+        SellerDTOUS0003 sellerDTOUS0003 = SellerDTOUS0003.builder()
+                .userId(s.getId())
+                .userName(s.getSellerName())
+                .followers(s.getUsers())
+                .build();
+        return sellerDTOUS0003;
+    }
+
+
 }

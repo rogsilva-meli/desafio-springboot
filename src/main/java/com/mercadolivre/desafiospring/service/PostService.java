@@ -3,6 +3,8 @@ package com.mercadolivre.desafiospring.service;
 
 import com.mercadolivre.desafiospring.dto.PostDTO;
 import com.mercadolivre.desafiospring.dto.PostDTOUS0006;
+import com.mercadolivre.desafiospring.dto.PostPromoDTO;
+import com.mercadolivre.desafiospring.dto.PostPromoDTOUS00010;
 import com.mercadolivre.desafiospring.entity.*;
 import com.mercadolivre.desafiospring.repository.*;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,22 @@ public class PostService {
         return p;
     }
 
+    public PostPromoDTO entityForPostPromoDTO(Post post){
+
+        PostPromoDTO p = PostPromoDTO.builder()
+                .userId(post.getSeller().getId())
+                .id_post(post.getId())
+                .date(post.getDate())
+                .detail(post.getProduct())
+                .category(post.getCategory().getId())
+                .price(post.getPrice())
+                .hasPromo(post.isHasPromo())
+                .discount(post.getDiscount())
+                .build();
+        return p;
+    }
+
+
     // Criar um post
     public Post createPost(Post post){
 
@@ -67,6 +85,12 @@ public class PostService {
         post.setSeller(s);
         post.setProduct(p);
         post.setCategory(c);
+
+        if(!post.isHasPromo()){
+            post.setHasPromo(false);
+        }
+
+
         return postRepository.save(post);
     }
 
@@ -94,7 +118,21 @@ public class PostService {
         return listPostDTOUS0006;
     }
 
-    // FALTA ARRUMAR A ORDENAGEM
+    // Converter PostDTO em Set de PostDTO
+    public Set<PostPromoDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
+
+        Seller s = getPostById(userId);
+
+        Set<PostPromoDTO> listPostPromoDTO = new HashSet<>();
+        for (Post c : s.getPosts()) {
+            PostPromoDTO postPromoDTO = entityForPostPromoDTO(c);
+            listPostPromoDTO.add(postPromoDTO);
+        }
+        return listPostPromoDTO;
+    }
+
+
+    // FALTA ARRUMAR A ORDENAÇÃO
     // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
     public Seller getPostById(Integer userId){
 

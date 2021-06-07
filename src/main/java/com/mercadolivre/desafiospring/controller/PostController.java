@@ -1,8 +1,6 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.dto.PostDTO;
-import com.mercadolivre.desafiospring.dto.PostDTOUS0006;
-import com.mercadolivre.desafiospring.dto.SellerDTOUS0006;
+import com.mercadolivre.desafiospring.dto.*;
 import com.mercadolivre.desafiospring.entity.Post;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
@@ -66,11 +64,23 @@ public class PostController {
 
         Set<PostDTOUS0006> listPostDTOUS0006 = postService.convertListPostDTOForListPostDTOUS0006(listRev);
 
-        SellerDTOUS0006 res = SellerDTOUS0006.builder().userId(s.getId())
+        SellerDTOUS0006 res = SellerDTOUS0006.builder()
+                .userId(s.getId())
                 .posts(listPostDTOUS0006)
                 .build();
 
         return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    // Exercício US 00010
+    @PostMapping("/products/newpromopost")
+    public ResponseEntity<PostPromoDTO> createPromoPost(@RequestBody Post post){
+
+        Post p = postService.createPost(post);
+
+        PostPromoDTO postPromoDTO = postService.entityForPostPromoDTO(p);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postPromoDTO);
     }
 }
 

@@ -1,5 +1,7 @@
 package com.mercadolivre.desafiospring.service;
 
+import com.mercadolivre.desafiospring.dto.UserDTO;
+import com.mercadolivre.desafiospring.dto.UserDTOUS0004;
 import com.mercadolivre.desafiospring.entity.Post;
 import com.mercadolivre.desafiospring.entity.Seller;
 import com.mercadolivre.desafiospring.entity.User;
@@ -39,6 +41,24 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IndexOutOfBoundsException("User "+id +" not found"));
         return user;
+    }
+
+    public UserDTO convertUserToUserDTO(User user){
+        UserDTO userDTO = UserDTO.builder()
+                .userId(user.getId())
+                .userName(user.getUserName())
+                .followers(user.getSellers())
+                .build();
+        return userDTO;
+    }
+
+    public UserDTOUS0004 convertUserToUserDTOUS0004(User user){
+        UserDTOUS0004 userDTOUS0004 = UserDTOUS0004.builder()
+                .userId(user.getId())
+                .userName(user.getUserName())
+                .followed(user.getSellers())
+                .build();
+        return userDTOUS0004;
     }
 
     public Seller followSeller(Integer userId, Integer userIdToFollow){

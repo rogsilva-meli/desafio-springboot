@@ -13,11 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-public class Post implements Comparable<Post>{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Post extends BaseEntity implements Comparable<Post>{
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;
@@ -33,6 +29,10 @@ public class Post implements Comparable<Post>{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
+
+    private boolean hasPromo;
+
+    private double discount;
 
 
     @Override

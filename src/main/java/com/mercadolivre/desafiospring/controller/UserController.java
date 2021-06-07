@@ -39,7 +39,6 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user){
         User u = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(u);
-
     }
 
     // Exercício US 0001
@@ -49,31 +48,21 @@ public class UserController {
             @PathVariable Integer userIdToFollow
     ) {
         Seller s = userService.followSeller(userId, userIdToFollow);
-        return ResponseEntity.status(HttpStatus.CREATED).body(s);
+        return ResponseEntity.status(HttpStatus.OK).body(s);
     }
 
     // Exercício US 0002
     @GetMapping("/users/{userId}/followers/count")
     public ResponseEntity<SellerDTO> getCountSellerByUser(@PathVariable Integer userId){
-        Seller s = sellerService.countUsers(userId);
-        SellerDTO sellerDTO = SellerDTO.builder()
-                .userId(s.getId())
-                .userName(s.getSellerName())
-                .followers_count(s.getFollowers_count())
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).body(sellerDTO);
+        SellerDTO s = sellerService.countUsers(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(s);
     }
 
     // Exercício US 0003
     @GetMapping("/users/{userId}/followers/list")
     public ResponseEntity<SellerDTOUS0003> getSellerById(@PathVariable Integer userId){
         Seller s = sellerService.getSellerById(userId);
-        SellerDTOUS0003 sellerDTOUS0003 = SellerDTOUS0003.builder()
-                .userId(s.getId())
-                .userName(s.getSellerName())
-                .followers(s.getUsers())
-                .build();
-
+        SellerDTOUS0003 sellerDTOUS0003 = sellerService.convertSellerToSellerDTOUS0003(s);
         return ResponseEntity.status(HttpStatus.OK).body(sellerDTOUS0003);
     }
 
@@ -81,12 +70,7 @@ public class UserController {
     @GetMapping("/users/{userId}/followed/list")
     public ResponseEntity<UserDTOUS0004> getUserById(@PathVariable Integer userId){
         User u = userService.getUserById(userId);
-        UserDTOUS0004 userDTOUS0004 = UserDTOUS0004.builder()
-                .userId(u.getId())
-                .userName(u.getUserName())
-                .followed(u.getSellers())
-                .build();
-
+        UserDTOUS0004 userDTOUS0004 = userService.convertUserToUserDTOUS0004(u);
         return ResponseEntity.status(HttpStatus.OK).body(userDTOUS0004);
     }
 
@@ -104,13 +88,7 @@ public class UserController {
     @GetMapping("/users/{userId}/followers")
     public ResponseEntity<UserDTO> lista(@PathVariable Integer userId, @RequestParam String order){
         User u = userService.getUsersAsc(userId, order);
-
-        UserDTO userDTO = UserDTO.builder()
-                .userId(u.getId())
-                .userName(u.getUserName())
-                .followers(u.getSellers())
-                .build();
-
+        UserDTO userDTO = userService.convertUserToUserDTO(u);
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 }

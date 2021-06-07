@@ -11,11 +11,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-public class Seller implements Comparable<Seller> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Seller extends BaseEntity implements Comparable<Seller> {
 
     private String sellerName;
 
@@ -27,7 +23,7 @@ public class Seller implements Comparable<Seller> {
     )
     public Set<User> users = new HashSet<>();
 
-    private int followers_count;
+    //private int followers_count;
 
     @JsonIgnore
     @OneToMany(mappedBy = "seller")
