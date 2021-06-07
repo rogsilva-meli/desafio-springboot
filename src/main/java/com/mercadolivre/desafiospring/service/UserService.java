@@ -42,22 +42,6 @@ public class UserService {
         return user;
     }
 
-    public UserDTO convertUserToUserDTO(User user){
-        UserDTO userDTO = UserDTO.builder()
-                .userId(user.getId())
-                .userName(user.getUserName())
-                .followers(user.getSellers())
-                .build();
-        return userDTO;
-    }
-
-    public UserDTO0003 convertUserToUserDTOUS0003(User user){
-        UserDTO0003 userDTOUS0003 = UserDTO0003.builder()
-                .userId(user.getId())
-                .userName(user.getUserName())
-                .build();
-        return userDTOUS0003;
-    }
 
     public UserDTO0004 convertUserToUserDTOUS0004(User user){
         UserDTO0004 userDTOUS0004 = UserDTO0004.builder()

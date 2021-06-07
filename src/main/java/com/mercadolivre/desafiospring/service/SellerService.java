@@ -103,8 +103,16 @@ public class SellerService {
                     .build();
             sellers.add(build);
         }
-
         return sellers;
+    }
+
+    public SellerDTO00012 convertSellerToSellerDTO00012(Seller s){
+
+        SellerDTO00012 sellerDTO00012 = SellerDTO00012.builder()
+                    .userId(s.getId())
+                    .posts(postService.convertListPostForListPostDTOPromo00012(s.getPosts()))
+                    .build();
+        return sellerDTO00012;
     }
 
     // Buscar vendedor e classificar em ordem decrescente os seus posts
@@ -124,20 +132,7 @@ public class SellerService {
         }
     }
 
-    public List<SellerDTO0009> convertUserToUserUserDTOUS0009 (List<Seller> listSeller){
-        List<SellerDTO0009> sellerDTO0009List = new ArrayList<>();
 
-        for(Seller s: listSeller){
-            SellerDTO0009 build = SellerDTO0009.builder()
-                    .userId(s.getId())
-                    .userName(s.getSellerName())
-                    .products(postService.convertListPostForListPostDTO0009(s.getPosts()))
-                    .build();
-            sellerDTO0009List.add(build);
-        }
-
-        return sellerDTO0009List;
-    }
 
     // Buscar vendedor e classificar em ordem decrescente os seus posts
     public SellerDTO0009 getProductsSellersOrder(Integer userId, String order){
@@ -155,6 +150,21 @@ public class SellerService {
             return sellerDTO0009;
         }
     }
+
+    public SellerDTO00011 countPromoProducts(Integer id){
+        Seller seller = sellerRepository.findById(id).get();
+
+        int i=(int)seller.getPosts().stream().filter(p -> p.isHasPromo()).count();
+
+        SellerDTO00011 sellerDTO00011 = SellerDTO00011.builder()
+                .userId(seller.getId())
+                .userName(seller.getSellerName())
+                .promoproducts_count(i)
+                .build();
+        return  sellerDTO00011;
+    }
+
+
 
 
 }

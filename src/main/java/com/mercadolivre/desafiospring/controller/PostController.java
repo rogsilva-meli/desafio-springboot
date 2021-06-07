@@ -41,7 +41,7 @@ public class PostController {
         Post p = postService.createPost(post);
 
         PostDTO postDTO = PostDTO.builder()
-                //.userId(p.getSeller().getId())
+                .userId(p.getSeller().getId())
                 .id_post(p.getId())
                 .date(p.getDate())
                 .detail(p.getProduct())
@@ -61,16 +61,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
-    // Exercício US 00010
-    @PostMapping("/products/newpromopost")
-    public ResponseEntity<PostDTO> createPromoPost(@RequestBody Post post){
 
-        Post p = postService.createPost(post);
-
-        PostDTO postPromoDTO = postService.entityForPostPromoDTO(p);
-
-        return ResponseEntity.status(HttpStatus.OK).body(postPromoDTO);
-    }
 }
 
 

@@ -1,10 +1,7 @@
 package com.mercadolivre.desafiospring.service;
 
 
-import com.mercadolivre.desafiospring.domain.dto.PostDTO;
-import com.mercadolivre.desafiospring.domain.dto.PostDTO0009;
-import com.mercadolivre.desafiospring.domain.dto.SellerDTO;
-import com.mercadolivre.desafiospring.domain.dto.SellerDTO0006;
+import com.mercadolivre.desafiospring.domain.dto.*;
 import com.mercadolivre.desafiospring.domain.entity.Category;
 import com.mercadolivre.desafiospring.domain.entity.Post;
 import com.mercadolivre.desafiospring.domain.entity.Product;
@@ -19,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -28,7 +26,8 @@ public class PostService {
     private SellerRepository sellerRepository;
     private CategoryRepository categoryRepository;
 
-    public PostService(PostRepository postRepository, ProductRepository productRepository, SellerRepository sellerRepository, CategoryRepository categoryRepository) {
+    public PostService(PostRepository postRepository, ProductRepository productRepository,
+                       SellerRepository sellerRepository, CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
@@ -80,17 +79,19 @@ public class PostService {
         return pDTO0009;
     }
 
-    public PostDTO entityForPostPromoDTO(Post post){
+    public PostDTOPromo entityForPostPromoDTO(Post post){
 
-        PostDTO postDTO = PostDTO.builder()
+        PostDTOPromo postDTOPromo = PostDTOPromo.builder()
                 .userId(post.getSeller().getId())
                 .id_post(post.getId())
                 .date(post.getDate())
                 .detail(post.getProduct())
                 .category(post.getCategory().getId())
                 .price(post.getPrice())
+                .hasPromo(post.isHasPromo())
+                .discount(post.getDiscount())
                 .build();
-        return postDTO;
+        return postDTOPromo;
     }
 
 
@@ -147,20 +148,6 @@ public class PostService {
         return postDTO0009List;
     }
 
-    // Converter PostDTO em Set de PostDTO
-    public List<PostDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
-
-        Seller s = getPostById(userId);
-
-        List<PostDTO> listPostPromoDTO = new ArrayList<>();
-        for (Post c : s.getPosts()) {
-            PostDTO postPromoDTO = entityForPostPromoDTO(c);
-            listPostPromoDTO.add(postPromoDTO);
-        }
-        return listPostPromoDTO;
-    }
-
-
     // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
     public Seller getPostById(Integer userId){
 
@@ -204,6 +191,44 @@ public class PostService {
                 .build();
 
         return res;
+    }
+
+    // Converter Set de PostDTO em Set de PostDTOUS00012
+    public List<PostDTOPromo00012> convertListPostForListPostDTOPromo00012(List<Post> list){
+
+        List<PostDTOPromo00012> postDTOPromo00012List = new ArrayList<>();
+        for (Post d : list) {
+            PostDTOPromo00012 postDTOPromo00012 = convertPostPromoDTO00012(d);
+            if(postDTOPromo00012.isHasPromo()) {
+                postDTOPromo00012List.add(postDTOPromo00012);
+            }
+        }
+        return postDTOPromo00012List;
+    }
+
+    // Converter Post em PostDTOUS00012
+    public PostDTOPromo00012 convertPostPromoDTO00012(Post post){
+
+        PostDTOPromo00012 promo00012 = PostDTOPromo00012.builder()
+                .id_post(post.getId())
+                .date(post.getDate())
+                .detail(post.getProduct())
+                .category(post.getCategory().getId())
+                .price(post.getPrice())
+                .hasPromo(post.isHasPromo())
+                .discount(post.getDiscount())
+                .build();
+
+        return promo00012;
+    }
+
+    public Seller getListPromoProductsBySeller(Integer userId){
+
+        Seller s = sellerRepository.findById(userId).get();
+
+        convertListPostForListPostDTOPromo00012(s.getPosts());
+
+        return s;
     }
 
 
