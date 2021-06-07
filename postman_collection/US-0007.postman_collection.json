@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "985503fd-3914-4cf7-a5e1-322584135afb",
+		"name": "US-0007",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuário deixar de seguir um vendedor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1/unfollow/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1",
+						"unfollow",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

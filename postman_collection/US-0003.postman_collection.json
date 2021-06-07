@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "f76dbfbf-1a42-439a-aaba-7a959c62fc77",
+		"name": "US-0003",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Usuarios que seguem um vendedor",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1/followers/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1",
+						"followers",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

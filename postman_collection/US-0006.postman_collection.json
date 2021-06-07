@@ -1,0 +1,30 @@
+{
+	"info": {
+		"_postman_id": "9988da0f-38fc-48a1-a732-b595e1d09c18",
+		"name": "US-0006",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar posts ordenados descrescente de um vendedor  de até 2 semanas atrás",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/followed/1/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"followed",
+						"1",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "e7da987f-4cf9-4b1c-b650-15e35396d0bd",
+		"name": "zUS-00011",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mostrar a quantidade de produtos promocionais de um vendedor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/products/1/countPromo",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"countPromo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

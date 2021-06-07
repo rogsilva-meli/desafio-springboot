@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "424ff0f1-e090-4ddb-8428-83e464d7a41f",
+		"name": "zUS-00010",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Criar post de produto promocional",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"30-05-2021\",\n    \"seller\": \n        {\"id\": 1},\n    \"product\": \n        {\"product_id\": 1},\n    \"category\": \n        {\"id\": 1},\n    \"price\": 100.0,\n    \"hasPromo\": true,\n    \"discount\": 5.0\n     \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/products/newpromopost",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"newpromopost"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
