@@ -21,6 +21,7 @@ public class UserDTO {
     private int userId;
     private String userName;
     private List<Seller> followers = new ArrayList<>();
+    private List<Seller> followed = new ArrayList<>();
 
 
 }

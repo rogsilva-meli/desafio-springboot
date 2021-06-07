@@ -2,14 +2,23 @@ package com.mercadolivre.desafiospring.service;
 
 
 import com.mercadolivre.desafiospring.domain.dto.PostDTO;
-import com.mercadolivre.desafiospring.domain.dto.PostDTOUS0006;
-import com.mercadolivre.desafiospring.domain.dto.PostPromoDTO;
-import com.mercadolivre.desafiospring.domain.dto.SellerDTOUS0006;
-import com.mercadolivre.desafiospring.domain.entity.*;
-import com.mercadolivre.desafiospring.repository.*;
+import com.mercadolivre.desafiospring.domain.dto.PostDTO0009;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTO;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTO0006;
+import com.mercadolivre.desafiospring.domain.entity.Category;
+import com.mercadolivre.desafiospring.domain.entity.Post;
+import com.mercadolivre.desafiospring.domain.entity.Product;
+import com.mercadolivre.desafiospring.domain.entity.Seller;
+import com.mercadolivre.desafiospring.repository.CategoryRepository;
+import com.mercadolivre.desafiospring.repository.PostRepository;
+import com.mercadolivre.desafiospring.repository.ProductRepository;
+import com.mercadolivre.desafiospring.repository.SellerRepository;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class PostService {
@@ -46,9 +55,9 @@ public class PostService {
     }
 
     // Converter PostDTO em PostDTOUS0006
-    public PostDTOUS0006 convertPostDTOToPostDTOUS0006(PostDTO postDTO){
+    public PostDTO convertPostDTOToPostDTOUS0006(PostDTO postDTO){
 
-        PostDTOUS0006 p = PostDTOUS0006.builder()
+        PostDTO pDTO = PostDTO.builder()
                 .userId(sellerRepository.getById(postDTO.getUserId()).getId())
                 .id_post(postDTO.getId_post())
                 .date(postDTO.getDate())
@@ -57,22 +66,31 @@ public class PostService {
                 .price(postDTO.getPrice())
                 .build();
 
-        return p;
+        return pDTO;
     }
 
-    public PostPromoDTO entityForPostPromoDTO(Post post){
+    // Converter PostDTO em PostDTOUS0006
+    public PostDTO0009 convertPostToPostDTOUS0009(Post post){
 
-        PostPromoDTO p = PostPromoDTO.builder()
+        PostDTO0009 pDTO0009 = PostDTO0009.builder()
+                .date(post.getDate())
+                .product(post.getProduct())
+                .build();
+
+        return pDTO0009;
+    }
+
+    public PostDTO entityForPostPromoDTO(Post post){
+
+        PostDTO postDTO = PostDTO.builder()
                 .userId(post.getSeller().getId())
                 .id_post(post.getId())
                 .date(post.getDate())
                 .detail(post.getProduct())
                 .category(post.getCategory().getId())
                 .price(post.getPrice())
-                .hasPromo(post.isHasPromo())
-                .discount(post.getDiscount())
                 .build();
-        return p;
+        return postDTO;
     }
 
 
@@ -108,24 +126,35 @@ public class PostService {
     }
 
     // Converter Set de PostDTO em Set de PostDTOUS0006
-    public List<PostDTOUS0006> convertListPostDTOForListPostDTOUS0006(List<PostDTO> list){
+    public List<PostDTO> convertListPostDTOForListPostDTOUS0006(List<PostDTO> list){
 
-        List<PostDTOUS0006> listPostDTOUS0006 = new ArrayList<>();
+        List<PostDTO> listPostDTOUS0006 = new ArrayList<>();
         for (PostDTO d : list) {
-            PostDTOUS0006 postDTOUS0006 = convertPostDTOToPostDTOUS0006(d);
+            PostDTO postDTOUS0006 = convertPostDTOToPostDTOUS0006(d);
             listPostDTOUS0006.add(postDTOUS0006);
         }
         return listPostDTOUS0006;
     }
 
+    // Converter Set de PostDTO em Set de PostDTOUS0009
+    public List<PostDTO0009> convertListPostForListPostDTO0009(List<Post> list){
+
+        List<PostDTO0009> postDTO0009List = new ArrayList<>();
+        for (Post d : list) {
+            PostDTO0009 postDTO0009 = convertPostToPostDTOUS0009(d);
+            postDTO0009List.add(postDTO0009);
+        }
+        return postDTO0009List;
+    }
+
     // Converter PostDTO em Set de PostDTO
-    public List<PostPromoDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
+    public List<PostDTO> convertEntitySellerForListPostPromoDTO(Integer userId){
 
         Seller s = getPostById(userId);
 
-        List<PostPromoDTO> listPostPromoDTO = new ArrayList<>();
+        List<PostDTO> listPostPromoDTO = new ArrayList<>();
         for (Post c : s.getPosts()) {
-            PostPromoDTO postPromoDTO = entityForPostPromoDTO(c);
+            PostDTO postPromoDTO = entityForPostPromoDTO(c);
             listPostPromoDTO.add(postPromoDTO);
         }
         return listPostPromoDTO;
@@ -159,20 +188,17 @@ public class PostService {
         return s;
     }
 
-    public SellerDTOUS0006 getListPostSellerDTOUS0006(Integer userId){
+    public SellerDTO0006 getListPostSellerDTOUS0006(Integer userId){
 
         Seller s = getPostByIdLastTwoWeeks(userId);
 
         List<PostDTO> postDTOS = convertEntitySellerForListPostDTO(userId);
 
-        List<PostDTO> list = new ArrayList<>();
-        list.addAll(postDTOS);
+        List<PostDTO> listPostDTOUS0006 = convertListPostDTOForListPostDTOUS0006(postDTOS);
 
-        List<PostDTOUS0006> listPostDTOUS0006 = convertListPostDTOForListPostDTOUS0006(list);
+        listPostDTOUS0006.sort(Comparator.comparing(PostDTO::getDate).reversed());
 
-        listPostDTOUS0006.sort(Comparator.comparing(PostDTOUS0006::getDate).reversed());
-
-        SellerDTOUS0006 res = SellerDTOUS0006.builder()
+        SellerDTO0006 res = SellerDTO0006.builder()
                 .userId(s.getId())
                 .posts(listPostDTOUS0006)
                 .build();

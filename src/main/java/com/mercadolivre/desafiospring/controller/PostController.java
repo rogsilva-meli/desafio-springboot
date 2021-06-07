@@ -40,27 +40,34 @@ public class PostController {
     public ResponseEntity<PostDTO> createPost(@RequestBody Post post){
         Post p = postService.createPost(post);
 
-        PostDTO postDTO = postService.entityForPostDTO(post);
+        PostDTO postDTO = PostDTO.builder()
+                //.userId(p.getSeller().getId())
+                .id_post(p.getId())
+                .date(p.getDate())
+                .detail(p.getProduct())
+                .category(p.getCategory().getId())
+                .price(p.getPrice())
+                .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(postDTO);
     }
 
     // Exercício US 0006
     @GetMapping("/products/followed/{userId}/list")
-    public ResponseEntity<SellerDTOUS0006> getAllFollowed(@PathVariable Integer userId){
+    public ResponseEntity<SellerDTO0006> getAllFollowed(@PathVariable Integer userId){
 
-        SellerDTOUS0006 listPost = postService.getListPostSellerDTOUS0006(userId);
+        SellerDTO0006 posts = postService.getListPostSellerDTOUS0006(userId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(listPost);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 
     // Exercício US 00010
     @PostMapping("/products/newpromopost")
-    public ResponseEntity<PostPromoDTO> createPromoPost(@RequestBody Post post){
+    public ResponseEntity<PostDTO> createPromoPost(@RequestBody Post post){
 
         Post p = postService.createPost(post);
 
-        PostPromoDTO postPromoDTO = postService.entityForPostPromoDTO(p);
+        PostDTO postPromoDTO = postService.entityForPostPromoDTO(p);
 
         return ResponseEntity.status(HttpStatus.OK).body(postPromoDTO);
     }

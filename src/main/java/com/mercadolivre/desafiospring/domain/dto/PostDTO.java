@@ -28,4 +28,5 @@ public class PostDTO{
 
     private Double price;
 
+
 }
