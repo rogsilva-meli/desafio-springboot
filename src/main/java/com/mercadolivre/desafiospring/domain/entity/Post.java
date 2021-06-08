@@ -1,9 +1,11 @@
 package com.mercadolivre.desafiospring.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class Post extends BaseEntity{
+
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date;

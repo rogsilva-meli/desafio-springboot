@@ -1,5 +1,6 @@
 package com.mercadolivre.desafiospring.domain.entity;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,14 +17,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer product_id;
 
+    @NotNull
     private String productName;
 
+    @NotNull
     private String type;
 
+    @NotNull
     private String brand;
 
+    @NotNull
     private String color;
 
+    @NotNull
     private String notes;
 
 

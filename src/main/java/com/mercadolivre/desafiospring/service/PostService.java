@@ -12,6 +12,7 @@ import com.mercadolivre.desafiospring.repository.ProductRepository;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -96,7 +97,7 @@ public class PostService {
 
 
     // Criar um post
-    public Post createPost(Post post){
+    public Post createPost(@Valid Post post){
 
         Seller s = sellerRepository.findById(post.getSeller().getId()).get();
         Product p = productRepository.findById(post.getProduct().getProduct_id()).get();
@@ -108,8 +109,6 @@ public class PostService {
         if(!post.isHasPromo()){
             post.setHasPromo(false);
         }
-
-
         return postRepository.save(post);
     }
 

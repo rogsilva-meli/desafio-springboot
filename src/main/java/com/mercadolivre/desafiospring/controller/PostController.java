@@ -6,11 +6,13 @@ import com.mercadolivre.desafiospring.domain.entity.Seller;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
 import com.mercadolivre.desafiospring.repository.UserRepository;
 import com.mercadolivre.desafiospring.service.PostService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -18,18 +20,13 @@ import java.util.*;
 public class PostController {
 
     private PostService postService;
-    private UserRepository userRepository;
-    private ProductRepository productRepository;
 
-
-    public PostController(PostService postService, UserRepository userRepository, ProductRepository productRepository) {
+    public PostController(PostService postService) {
         this.postService = postService;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-
     }
 
     @GetMapping("/products/posts")
+    @ApiOperation(value= "Retorna uma lista de publicações")
     public ResponseEntity<List<Post>> getAll(){
         List<Post> list = postService.getAllPosts();
         return ResponseEntity.status(HttpStatus.OK).body(list);
@@ -37,6 +34,7 @@ public class PostController {
 
     // Exercício US 0005
     @PostMapping("/products/newpost")
+    @ApiOperation(value= "Cria uma nova publicação")
     public ResponseEntity<PostDTO> createPost(@RequestBody Post post){
         Post p = postService.createPost(post);
 
@@ -54,6 +52,7 @@ public class PostController {
 
     // Exercício US 0006
     @GetMapping("/products/followed/{userId}/list")
+    @ApiOperation(value= "Retorna uma lista descrescente das publicações feitas pelos vendedores que um usuário segue nas últimas duas semanas")
     public ResponseEntity<SellerDTO0006> getAllFollowed(@PathVariable Integer userId){
 
         SellerDTO0006 posts = postService.getListPostSellerDTOUS0006(userId);
