@@ -3,7 +3,12 @@ package com.mercadolivre.desafiospring.domain.entity;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.*;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,19 +22,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer product_id;
 
-    @NotNull
+    @NotBlank(message = "ProductName field can't be empty or null")
     private String productName;
 
-    @NotNull
+    @NotBlank(message = "Type field can't be empty or null")
     private String type;
 
-    @NotNull
+    @NotBlank(message = "Brand field can't be empty or null")
     private String brand;
 
-    @NotNull
+    @NotBlank(message = "Color field can't be empty or null")
     private String color;
 
-    @NotNull
+    @NotBlank(message = "Notes field can't be empty or null")
     private String notes;
 
 

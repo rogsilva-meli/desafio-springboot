@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,7 +26,7 @@ public class CategoryController {
 
     @PostMapping("/categories")
     @ApiOperation(value= "Cria uma categoria de produto")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
+    public ResponseEntity<Category> createCategory(@Valid  @RequestBody Category category){
         Category c = categoryService.create(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(c);
     }

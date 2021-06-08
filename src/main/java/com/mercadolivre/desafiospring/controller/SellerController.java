@@ -1,5 +1,6 @@
 package com.mercadolivre.desafiospring.controller;
 
+import com.mercadolivre.desafiospring.domain.dto.SellerDTORegister;
 import com.mercadolivre.desafiospring.domain.entity.Seller;
 import com.mercadolivre.desafiospring.service.SellerService;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class SellerController {
 
     @PostMapping("/sellers")
     @ApiOperation(value= "Cria um vendedor")
-    public ResponseEntity<Seller> createSeller(@RequestBody Seller seller){
+    public ResponseEntity<Seller> createSeller(@RequestBody SellerDTORegister seller){
         Seller s = sellerService.createSeller(seller);
         return ResponseEntity.status(HttpStatus.CREATED).body(s);
 

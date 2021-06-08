@@ -14,6 +14,6 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class Category extends BaseEntity{
 
-    @NotBlank(message = "{name.not.blank}")
+    @NotBlank(message = "Name field can't be empty or null")
     private String name;
 }

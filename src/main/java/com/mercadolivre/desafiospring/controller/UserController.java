@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -32,10 +33,17 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/users/{userId}")
+    @ApiOperation(value= "Retorna uma lista de usuários")
+    public ResponseEntity<User> getUser(@PathVariable Integer userId){
+        User u = userService.getUserById(userId);
+        return ResponseEntity.ok(u);
+    }
+
 
     @PostMapping("/users")
     @ApiOperation(value= "Cria um usuário")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody @Valid UserDTORegister user){
         User u = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(u);
     }

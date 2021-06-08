@@ -1,10 +1,8 @@
 package com.mercadolivre.desafiospring.controller;
 
-import com.mercadolivre.desafiospring.domain.dto.*;
+import com.mercadolivre.desafiospring.domain.dto.PostDTO;
+import com.mercadolivre.desafiospring.domain.dto.SellerDTO0006;
 import com.mercadolivre.desafiospring.domain.entity.Post;
-import com.mercadolivre.desafiospring.domain.entity.Seller;
-import com.mercadolivre.desafiospring.repository.ProductRepository;
-import com.mercadolivre.desafiospring.repository.UserRepository;
 import com.mercadolivre.desafiospring.service.PostService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -35,7 +33,7 @@ public class PostController {
     // Exercício US 0005
     @PostMapping("/products/newpost")
     @ApiOperation(value= "Cria uma nova publicação")
-    public ResponseEntity<PostDTO> createPost(@RequestBody Post post){
+    public ResponseEntity<PostDTO> createPost(@Valid @RequestBody Post post){
         Post p = postService.createPost(post);
 
         PostDTO postDTO = PostDTO.builder()

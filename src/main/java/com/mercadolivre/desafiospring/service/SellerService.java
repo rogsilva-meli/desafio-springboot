@@ -3,6 +3,8 @@ package com.mercadolivre.desafiospring.service;
 import com.mercadolivre.desafiospring.domain.dto.*;
 import com.mercadolivre.desafiospring.domain.entity.Seller;
 import com.mercadolivre.desafiospring.domain.entity.User;
+import com.mercadolivre.desafiospring.exception.error.NotFoundException;
+import com.mercadolivre.desafiospring.exception.error.UserSellerValidateRequestException;
 import com.mercadolivre.desafiospring.repository.SellerRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +30,19 @@ public class SellerService {
         return all;
     }
 
-    public Seller createSeller(Seller seller) {
-        return sellerRepository.save(seller);
+    public Seller createSeller(SellerDTORegister seller) {
+        if(seller.getSellerName().isEmpty()){
+            throw new UserSellerValidateRequestException("Sellername field can't be empty");
+        }
+        Seller request = new Seller();
+        request.setSellerName(seller.getSellerName());
+        return sellerRepository.save(request);
     }
 
     public SellerDTO0002 countUsers(Integer id){
-        Seller seller = sellerRepository.findById(id).get();
+        Seller seller = sellerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User "+id +" not found"));
+
         int i=(int)seller.getUsers().stream().count();
 
         SellerDTO0002 sellerDTO = SellerDTO0002.builder()
@@ -46,7 +55,7 @@ public class SellerService {
 
     public Seller getSellerById(Integer id){
         Seller seller = sellerRepository.findById(id)
-                .orElseThrow(() -> new IndexOutOfBoundsException("Seller "+id +" not found"));
+                .orElseThrow(() -> new NotFoundException("Seller "+id +" not found"));
         return seller;
     }
 
@@ -118,7 +127,8 @@ public class SellerService {
     // Buscar vendedor e classificar em ordem decrescente os seus posts
     public SellerDTO0003 getSellersAsc(Integer userId, String order){
 
-        Seller seller = sellerRepository.findById(userId).get();
+        Seller seller = sellerRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User "+userId +" not found"));
         SellerDTO0003 sellerDTO0003 = convertSellerToSellerDTOUS0003(seller);
 
         if(order.equals("name_asc")) {
@@ -137,7 +147,7 @@ public class SellerService {
     // Buscar vendedor e classificar em ordem decrescente os seus posts
     public SellerDTO0009 getProductsSellersOrder(Integer userId, String order){
 
-        Seller seller = sellerRepository.findById(userId).get();
+        Seller seller = sellerRepository.findById(userId).orElseThrow(() -> new NotFoundException("User "+userId +" not found"));
         SellerDTO0009 sellerDTO0009 = convertSellerToSellerDTO0009(seller);
 
         if(order.equals("name_asc")) {
@@ -152,7 +162,7 @@ public class SellerService {
     }
 
     public SellerDTO00011 countPromoProducts(Integer id){
-        Seller seller = sellerRepository.findById(id).get();
+        Seller seller = sellerRepository.findById(id).orElseThrow(() -> new NotFoundException("Seller "+id +" not found"));
 
         int i=(int)seller.getPosts().stream().filter(p -> p.isHasPromo()).count();
 

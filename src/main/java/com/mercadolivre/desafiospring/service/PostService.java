@@ -6,6 +6,7 @@ import com.mercadolivre.desafiospring.domain.entity.Category;
 import com.mercadolivre.desafiospring.domain.entity.Post;
 import com.mercadolivre.desafiospring.domain.entity.Product;
 import com.mercadolivre.desafiospring.domain.entity.Seller;
+import com.mercadolivre.desafiospring.exception.error.NotFoundException;
 import com.mercadolivre.desafiospring.repository.CategoryRepository;
 import com.mercadolivre.desafiospring.repository.PostRepository;
 import com.mercadolivre.desafiospring.repository.ProductRepository;
@@ -17,7 +18,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -97,11 +97,14 @@ public class PostService {
 
 
     // Criar um post
-    public Post createPost(@Valid Post post){
+    public Post createPost(Post post){
 
-        Seller s = sellerRepository.findById(post.getSeller().getId()).get();
-        Product p = productRepository.findById(post.getProduct().getProduct_id()).get();
-        Category c = categoryRepository.findById(post.getCategory().getId()).get();
+        Seller s = sellerRepository.findById(post.getSeller().getId())
+                .orElseThrow(() -> new NotFoundException("Seller "+post.getSeller().getId() +" not found"));
+        Product p = productRepository.findById(post.getProduct().getProduct_id())
+                .orElseThrow(() -> new NotFoundException("Product "+post.getProduct().getProduct_id() +" not found"));
+        Category c = categoryRepository.findById(post.getCategory().getId())
+                .orElseThrow(() -> new NotFoundException("Category "+post.getCategory().getId() +" not found"));
         post.setSeller(s);
         post.setProduct(p);
         post.setCategory(c);
@@ -150,7 +153,8 @@ public class PostService {
     // US 0006 Buscar vendedor e classificar em ordem decrescente os seus posts
     public Seller getPostById(Integer userId){
 
-        Seller s = sellerRepository.findById(userId).get();
+        Seller s = sellerRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Seller "+userId +" not found"));
 
         return s;
     }
@@ -161,7 +165,8 @@ public class PostService {
         LocalDate today = LocalDate.now();
         LocalDate twoWeeks = today.minusWeeks(2);
 
-        Seller s = sellerRepository.findById(userId).get();
+        Seller s = sellerRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Seller "+userId +" not found"));
 
         List<Post> list = new ArrayList<>();
         for (Post p : s.getPosts()) {

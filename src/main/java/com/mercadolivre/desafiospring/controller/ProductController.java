@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -38,7 +39,7 @@ public class ProductController {
 
     @PostMapping("/products")
     @ApiOperation(value= "Cria um novo produto")
-    public ResponseEntity<Product> create(@RequestBody Product product){
+    public ResponseEntity<Product> create(@Valid @RequestBody Product product){
         Product p = productService.createProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(p);
     }
@@ -79,8 +80,4 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.OK).body(sellerDTO00012);
     }
-
-
-
-
 }
